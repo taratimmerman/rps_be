@@ -27,6 +27,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :rps_api, RpsApiWeb.Auth.Guardian,
+  issuer: "rps_api",
+  secret_key: "lsqILSfnc+zLJyP1IcrCP/2vFDcPMM9+b35jFnh/kvJ5nOaruJqfHZq+36LTfnwO"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
