@@ -14,10 +14,19 @@ defmodule RpsApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug RpsApiWeb.Auth.Pipeline
+  end
+
   scope "/api", RpsApiWeb do
     pipe_through :api
     get "/", DefaultController, :index
     post "/accounts/create", AccountController, :create
     post "/accounts/sign-in", AccountController, :sign_in
+  end
+
+  scope "/api", RpsApiWeb do
+    pipe_through [:api, :auth]
+    get "/accounts/by_id/:id", AccountController, :show
   end
 end
