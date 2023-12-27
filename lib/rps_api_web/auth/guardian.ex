@@ -1,5 +1,5 @@
 defmodule RpsApiWeb.Auth.Guardian do
-  use Guardian, otp_app: :real_deal_api
+  use Guardian, otp_app: :rps_api
 
   alias RpsApi.Accounts
 

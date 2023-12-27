@@ -1,8 +1,8 @@
 defmodule RpsApiWeb.AccountController do
   use RpsApiWeb, :controller
 
-  alias RpsApi.Accounts
-  alias RpsApi.Accounts.Account
+  alias RpsApiWeb.Auth.Guardian
+  alias RpsApi.{Accounts, Accounts.Account, Users, Users.User}
 
   action_fallback RpsApiWeb.FallbackController
 
@@ -11,11 +11,14 @@ defmodule RpsApiWeb.AccountController do
     render(conn, :index, accounts: accounts)
   end
 
+  @spec create(any(), map()) :: any()
   def create(conn, %{"account" => account_params}) do
-    with {:ok, %Account{} = account} <- Accounts.create_account(account_params) do
+    with {:ok, %Account{} = account} <- Accounts.create_account(account_params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(account),
+         {:ok, %User{} = _user} <- Users.create_user(account, account_params) do
       conn
       |> put_status(:created)
-      |> render(:show, account: account)
+      |> render(:account_token, %{account: account, token: token})
     end
   end
 

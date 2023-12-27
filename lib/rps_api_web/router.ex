@@ -8,5 +8,6 @@ defmodule RpsApiWeb.Router do
   scope "/api", RpsApiWeb do
     pipe_through :api
     get "/", DefaultController, :index
+    post "/accounts/create", AccountController, :create
   end
 end
