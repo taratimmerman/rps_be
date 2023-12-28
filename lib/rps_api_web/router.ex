@@ -28,5 +28,6 @@ defmodule RpsApiWeb.Router do
   scope "/api", RpsApiWeb do
     pipe_through [:api, :auth]
     get "/accounts/by_id/:id", AccountController, :show
+    put "/accounts/update", AccountController, :update
   end
 end
