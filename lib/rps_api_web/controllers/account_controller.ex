@@ -10,10 +10,9 @@ defmodule RpsApiWeb.AccountController do
 
   defp is_authorized_account(conn, _opts) do
     %{params: %{"account" => params}} = conn
-    body_id = conn.body_params["account"]["id"]
     account = Accounts.get_account!(params["id"])
 
-    if body_id == account.id do
+    if conn.assigns.account.id == account.id do
       conn
     else
       raise ErrorResponse.Forbidden
