@@ -12,10 +12,12 @@ defmodule RpsApiWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
 
   pipeline :auth do
     plug RpsApiWeb.Auth.Pipeline
+    plug RpsApiWeb.Auth.SetAccount
   end
 
   scope "/api", RpsApiWeb do

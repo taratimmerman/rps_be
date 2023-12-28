@@ -40,6 +40,7 @@ defmodule RpsApiWeb.AccountController do
     case Guardian.authenticate(email, hash_password) do
       {:ok, account, token} ->
         conn
+        |> Plug.Conn.put_session(:account_id, account.id)
         |> put_status(:ok)
         |> render(:account_token, %{account: account, token: token})
 
