@@ -24,12 +24,14 @@ defmodule RpsApiWeb.Router do
     pipe_through :api
     get "/", DefaultController, :index
     post "/accounts/create", AccountController, :create
-    post "/accounts/sign-in", AccountController, :sign_in
+    post "/accounts/sign_in", AccountController, :sign_in
   end
 
   scope "/api", RpsApiWeb do
     pipe_through [:api, :auth]
     get "/accounts/by_id/:id", AccountController, :show
     put "/accounts/update", AccountController, :update
+    post "/accounts/refresh_session", AccountController, :refresh_session
+    post "/accounts/sign_out", AccountController, :sign_out
   end
 end
